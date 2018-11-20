@@ -1,0 +1,30 @@
+{
+  "0": {
+    "id": "0",
+    "title": "404",
+    "content": "#",
+    "url": "http://localhost:4000/page/404.html",
+    "relUrl": "/page/404.html"
+  },
+  "1": {
+    "id": "1",
+    "title": "关于",
+    "content": "这里是介绍的页面",
+    "url": "http://localhost:4000/about",
+    "relUrl": "/about"
+  },
+  "2": {
+    "id": "2",
+    "title": "",
+    "content": "",
+    "url": "http://localhost:4000/",
+    "relUrl": "/"
+  },
+  "3": {
+    "id": "3",
+    "title": "我",
+    "content": "这里是介绍的页面",
+    "url": "http://localhost:4000/page/about/me.html",
+    "relUrl": "/page/about/me.html"
+  }
+}
