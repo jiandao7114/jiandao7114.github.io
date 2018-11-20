@@ -1,30 +1,12 @@
+---
+---
 {
-  "0": {
-    "id": "0",
-    "title": "404",
-    "content": "#",
-    "url": "http://localhost:4000/blog/page/404.html",
-    "relUrl": "/page/404.html"
-  },
-  "1": {
-    "id": "1",
-    "title": "关于",
-    "content": "这里是介绍的页面",
-    "url": "http://localhost:4000/blog/about",
-    "relUrl": "/about"
-  },
-  "2": {
-    "id": "2",
-    "title": "",
-    "content": "",
-    "url": "http://localhost:4000/blog/",
-    "relUrl": "/"
-  },
-  "3": {
-    "id": "3",
-    "title": "我",
-    "content": "这里是介绍的页面",
-    "url": "http://localhost:4000/blog/page/about/me.html",
-    "relUrl": "/page/about/me.html"
-  }
+  {% for page in site.html_pages %}"{{ forloop.index0 }}": {
+    "id": "{{ forloop.index0 }}",
+    "title": "{{ page.title | xml_escape }}",
+    "content": "{{ page.content | markdownify | strip_html | xml_escape | remove: 'Table of contents' | remove: page.title | strip_newlines | replace: '\', ' '}}",
+    "url": "{{ page.url | absolute_url | xml_escape }}",
+    "relUrl": "{{ page.url | xml_escape }}"
+  }{% if forloop.last %}{% else %},
+  {% endif %}{% endfor %}
 }
