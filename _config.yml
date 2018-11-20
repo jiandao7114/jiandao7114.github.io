@@ -17,8 +17,8 @@ title: jiandao7114
 email: jiandao7114@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   记录一些零碎的东西
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/" # the subpath of your site, e.g. /blog
+url: "https://www.shenyss.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jiandao7114
 github_username:  jiandao7114
 
