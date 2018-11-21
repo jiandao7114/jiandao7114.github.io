@@ -24,13 +24,7 @@ github_username:  jiandao7114
 
 # Build settings
 markdown: kramdown
-theme: just-the-docs
-# Enable or disable the site search
-search_enabled: true
-color_scheme: "dark"
-aux_links:
-"联系我":
-    - "//github.com/jiandao7114/jiandao7114.github.io"
+theme: jekyll-theme-hacker
 plugins:
   - jekyll-feed
 
@@ -45,3 +39,4 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
