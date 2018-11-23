@@ -1,0 +1,48 @@
+---
+layout: post
+title:  "API鉴权的一些总结"
+date:   2018-11-23 22:43:33 +0800
+categories: post
+---
+
+# API鉴权相关
+
+其中api\_key是API的访问密钥，secret\_key用于对请求参数签名的私钥。
+
+**注意： 请勿向任何人泄露这两个参数，这两个参数关乎接口的安全。**
+
+##参数签名
+
+1、首先，将待签名字符串要求按照参数名进行排序(首先比较所有参数名的第一个字母，按abcd顺序排列，若遇到相同首字母，则看第二个字母，以此类推)。
+
+例如：对于如下的参数进行签名
+
+```
+string[] parameters={"api_key=api_key","user_id=10010","remark=reason"};     
+```
+
+2、将参数进行URL编码后，生成待签名的字符串
+
+```
+api_key=api_key&remark=reason&user_id=10010
+```
+
+3、然后，将待签名字符串添加私钥参数生成最终待签名字符串。
+
+```
+api_key=api_key&remark=reason&user_id=10010&secret_key=secret_key
+```
+
+注意，&secret\_key=secret\_key 为签名必传参数。  
+
+4、最后，利用SHA256算法，对最终待签名字符串进行签名运算，从而得到签名结果字符串(该字符串赋值于参数sign)。
+
+```
+2ad8df5b77dbba675a03bc7436fe01c0c42972077ac3d7c2532bccf28a7c405a
+```
+
+5、在请求参数中添加sign参数，最终请求如下
+
+```
+curl -X POST 'https://api.domain.com/api/v1/auth' -d 'api_key=api_key&remark=reason&user_id=10010&sign=2ad8df5b77dbba675a03bc7436fe01c0c42972077ac3d7c2532bccf28a7c405a'
+```
