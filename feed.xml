@@ -1,4 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-11-23T23:17:22+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">jiandao7114</title><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/post/2018/11/23/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2018-11-23T22:30:33+08:00</published><updated>2018-11-23T22:30:33+08:00</updated><id>http://localhost:4000/post/2018/11/23/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/post/2018/11/23/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-11-23T23:46:33+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">jiandao7114</title><entry><title type="html">API鉴权的一些总结</title><link href="http://localhost:4000/post/2018/11/23/auth.html" rel="alternate" type="text/html" title="API鉴权的一些总结" /><published>2018-11-23T22:43:33+08:00</published><updated>2018-11-23T22:43:33+08:00</updated><id>http://localhost:4000/post/2018/11/23/auth</id><content type="html" xml:base="http://localhost:4000/post/2018/11/23/auth.html">&lt;h1 id=&quot;api鉴权相关&quot;&gt;API鉴权相关&lt;/h1&gt;
+
+&lt;p&gt;其中api_key是API的访问密钥，secret_key用于对请求参数签名的私钥。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;注意： 请勿向任何人泄露这两个参数，这两个参数关乎接口的安全。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;##参数签名&lt;/p&gt;
+
+&lt;p&gt;1、首先，将待签名字符串要求按照参数名进行排序(首先比较所有参数名的第一个字母，按abcd顺序排列，若遇到相同首字母，则看第二个字母，以此类推)。&lt;/p&gt;
+
+&lt;p&gt;例如：对于如下的参数进行签名&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;string[] parameters={&quot;api_key=api_key&quot;,&quot;user_id=10010&quot;,&quot;remark=reason&quot;};     
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;2、将参数进行URL编码后，生成待签名的字符串&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;api_key=api_key&amp;amp;remark=reason&amp;amp;user_id=10010
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;3、然后，将待签名字符串添加私钥参数生成最终待签名字符串。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;api_key=api_key&amp;amp;remark=reason&amp;amp;user_id=10010&amp;amp;secret_key=secret_key
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;注意，&amp;amp;secret_key=secret_key 为签名必传参数。&lt;/p&gt;
+
+&lt;p&gt;4、最后，利用SHA256算法，对最终待签名字符串进行签名运算，从而得到签名结果字符串(该字符串赋值于参数sign)。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2ad8df5b77dbba675a03bc7436fe01c0c42972077ac3d7c2532bccf28a7c405a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;5、在请求参数中添加sign参数，最终请求如下&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -X POST 'https://api.domain.com/api/v1/auth' -d 'api_key=api_key&amp;amp;remark=reason&amp;amp;user_id=10010&amp;amp;sign=2ad8df5b77dbba675a03bc7436fe01c0c42972077ac3d7c2532bccf28a7c405a'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">API鉴权相关</summary></entry><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/post/2018/11/23/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2018-11-23T22:30:33+08:00</published><updated>2018-11-23T22:30:33+08:00</updated><id>http://localhost:4000/post/2018/11/23/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/post/2018/11/23/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
 
 &lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
 
